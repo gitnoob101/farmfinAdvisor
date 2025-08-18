@@ -154,7 +154,3 @@ async def get_financial_advisory(query_input: FinancialQueryInput):
             status_code=503,
             detail=f"Failed to generate response from Google AI. Reason: {e}"
         )
-
-# --- RUNNER ---
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
