@@ -1,0 +1,17 @@
+# Web Framework and Server
+fastapi
+uvicorn[standard]
+
+# Google Generative AI SDK
+google-generativeai
+
+# LangChain and Vector Database
+langchain-community
+chromadb
+sentence-transformers
+
+# Geolocation Tool
+geopy
+
+# Pydantic is a dependency of FastAPI, but listed for clarity
+pydantic
