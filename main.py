@@ -22,6 +22,7 @@ from typing import Optional
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
 
 # Google Generative AI
 import google.generativeai as genai
@@ -39,6 +40,15 @@ app = FastAPI(
     title="Krishi Financial Advisor API",
     description="A RAG-based agent to provide financial advice to farmers using Google's Gemini model.",
     version="1.0.0",
+)
+origins = ["http://localhost:5173","https://krishisetu-a6f6f.web.app"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
 )
 
 # --- CONFIGURE GOOGLE GENERATIVE AI ---
@@ -130,8 +140,8 @@ async def get_financial_advisory(query_input: FinancialQueryInput):
     # 4. Generate the final prompt for the Gemini model
     final_prompt = f"""
     You are an expert financial advisor for farmers in India.
-    Your task is to provide a clear, concise, and helpful summary of the best loan options based *only* on the context provided below.
-    Do not make up information. If the context doesn't provide a specific number (like an interest rate), state that it was "not specified in the provided text".
+    Your task is to provide a clear, concise, and helpful summary of the best loan options based on the context provided below.
+    if the query is not it context then you have to answer it only if you are sure about serch your knowlege base.
     Structure your answer clearly. Start with the best national option, then mention any relevant state-specific information if found.
 
     CONTEXT:
